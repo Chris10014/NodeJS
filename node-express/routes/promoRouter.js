@@ -41,18 +41,18 @@ promoRouter
 
     .get((req, res, next) => {
       res.end(
-        "Will send details of the promotion: " + req.params.promotionId + " to you!"
+        "Will send details of the promotion: " + req.params.promoId + " to you!"
       );
       next();
     })
 
     .post((req, res, next) => {
       res.statusCode = 403;
-      res.end("POST operation not supported on /promotions/" + req.params.promotionId);
+      res.end("POST operation not supported on /promotions/" + req.params.promoId);
     })
 
     .put((req, res, next) => {
-      res.write("Updating the promotion: " + req.params.promotionId + "\n");
+      res.write("Updating the promotion: " + req.params.promoId + "\n");
       res.end(
         "Will update the promotion: " +
           req.body.name +
@@ -61,7 +61,7 @@ promoRouter
       );
     })
     .delete((req, res, next) => {
-        res.end("Deleting promotion: " + req.params.promotionId);
+        res.end("Deleting promotion: " + req.params.promoId);
   });
 
 module.exports = promoRouter;
