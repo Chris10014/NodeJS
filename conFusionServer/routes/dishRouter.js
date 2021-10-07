@@ -5,7 +5,7 @@ const Dishes = require('../models/dishes');
 
 const dishRouter = express.Router();
 
-dishRouter.use(bodyParser.json());
+dishRouter.use(express.json());
 
 dishRouter.route('/')
 .get((req, res, next) => {
@@ -83,12 +83,10 @@ dishRouter.route('/:dishId')
       );
       next();
     })
-
     .post((req, res, next) => {
       res.statusCode = 403;
       res.end("POST operation not supported on /dishes/" + req.params.dishId);
     })
-
     .put((req, res, next) => {
       res.write("Updating the dish: " + req.params.dishId + "\n");
       res.end(

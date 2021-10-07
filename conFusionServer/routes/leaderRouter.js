@@ -5,7 +5,8 @@ const Leaders = require("../models/leaders");
 
 const leaderRouter = express.Router();
 // leaderRouter.use(express.urlencoded({ extended: true })); // instead of bodyParser?
-leaderRouter.use(bodyParser.json());
+// leaderRouter.use(bodyParser.json()); //depricated
+leaderRouter.use(express.json());
 
 leaderRouter.route("/")
   .get((req, res, next) => {
