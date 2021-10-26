@@ -39,34 +39,39 @@ favouriteRouter
       .catch((err) => next(err));
   })
   .post(cors.cors, authenticate.verifyUser, (req, res, next) => {
-    Favourites.findOne({ user: req.user._id })
-    .populate("user")
-    .populate("dishes")
+    Favourites.findOne({ user: req.user._id })    
       .then(
         (favourites) => {
           if (favourites) {
+            console.log("Fav Array: ", favourites.dishes);
             req.body.forEach((element) => {
+              console.log("element: ", element)
               var index = favourites.dishes.indexOf(element._id);
+              console.log("idx: ", index);
               if (index == -1) {
                 favourites.dishes.push(element._id);
               }
             });
             favourites.save();
+
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.json(favourites);
           } else {
             req.body.user = req.user._id;
             Favourites.create({ user: req.user._id }).then(
               (favourites) => {
                 req.body.forEach((element) => {
-                  favourites.dishes.push(element);
+                  favourites.dishes.push(element._id);
                 });
                 favourites.save();
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.json(favourites);
               },
               (err) => next(err)
             );
-          }
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.json(favourites);
+          }          
         },
         (err) => next(err)
       )
