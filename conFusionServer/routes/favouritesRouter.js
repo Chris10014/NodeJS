@@ -102,7 +102,6 @@ favouriteRouter
         if (favourite) {
           //Is dishId part of the favourites?
             var index = favourite.dishes.indexOf(req.params.dishId);
-            console.log("idx: " + index);
             if (index !== -1) {
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
@@ -123,7 +122,46 @@ favouriteRouter
       }
   })
   .catch((err) => (err));
-});
+})
+.post(cors.cors, authenticate.verifyUser, (req, res, next) => {
+  Favourites.findOne({"user": req.user._id})
+  .then((favourite) => {
+    //Is dish already in favourite list?
+    var index = favourite.dishes.indexOf(req.params.dishId);
+    if(index == -1) {
+      favourite.dishes.push(req.params.dishId);
+      favourite.save()
 
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.json(favourite);
+    } else {
+      res.json(favourite);
+    }
+  })
+  .catch((err) => (err));
+})
+.delete(cors.cors, authenticate.verifyUser, (req, res, next) => {
+  Favourites.findOne({"user": req.user._id})
+  .then((favourite) => {
+    var index = favourite.dishes.indexOf(req.params.dishId);
+    if(index !== -1) {
+      favourite.dishes.splice(index, 1);
+      favourite.save();
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.json(favourite);
+    } else {
+      //do nothing
+      var err = new Error(
+        "No favourite dish with id " +
+        req.params.dishId + "to delete!"
+      );
+      err.status = 404;
+      return next(err);
+    }
+  })
+  .catch((err) => (err));
+});
 
 module.exports = favouriteRouter;
