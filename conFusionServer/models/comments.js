@@ -6,7 +6,7 @@ var commentSchema = new Schema({
         type: Number,
         min: 1,
         max: 5,
-        required: true
+        default: 1 //Otherwise the defaul value one in the frontend is not recognized
     },
     comment:  {
         type: String,

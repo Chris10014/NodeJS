@@ -17,7 +17,6 @@ dishRouter
   })
   .get(cors.cors, (req, res, next) => {
     Dishes.find(req.query)
-      .populate("comments.author")
       .then(
         (dishes) => {
           res.statusCode = 200;
@@ -82,7 +81,6 @@ dishRouter
   })
   .get(cors.cors, (req, res, next) => {
     Dishes.findById(req.params.dishId)
-      .populate("comments.author")
       .then(
         (dish) => {
           res.statusCode = 200;
