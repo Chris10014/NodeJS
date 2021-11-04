@@ -4,18 +4,12 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {Dishes} from '../models';
 import {DishesRepository} from '../repositories';
@@ -23,8 +17,8 @@ import {DishesRepository} from '../repositories';
 export class DishesController {
   constructor(
     @repository(DishesRepository)
-    public dishesRepository : DishesRepository,
-  ) {}
+    public dishesRepository: DishesRepository,
+  ) { }
 
   @post('/dishes')
   @response(200, {

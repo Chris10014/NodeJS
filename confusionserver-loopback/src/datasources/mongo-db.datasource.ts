@@ -6,7 +6,7 @@ const config = {
   connector: 'mongodb',
   url: 'mongodb://localhost:27017/conFusion',
   host: '',
-  port: 0,
+  port: '',
   user: '',
   password: '',
   database: '',
